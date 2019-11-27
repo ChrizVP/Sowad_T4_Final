@@ -1,5 +1,5 @@
 export class Servicio{
-    servicio_id:number;
-    nombre:String;
-    monto:Float32Array;
+    public servicio_id:number;
+    public nombre:String;
+    public monto:Float32Array;
 }

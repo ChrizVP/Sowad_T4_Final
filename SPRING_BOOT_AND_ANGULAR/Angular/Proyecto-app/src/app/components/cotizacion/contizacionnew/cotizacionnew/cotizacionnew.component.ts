@@ -14,6 +14,8 @@ import Swal from 'sweetalert2';
 export class CotizacionnewComponent implements OnInit {
 
   clientes:Cliente[];
+  cliente:Cliente;
+  personal:Personal
   personals:Personal[];
   dateDay = new Date();
   servicioMecanicoCab:ServicioMecanicoCab = new ServicioMecanicoCab();
@@ -39,7 +41,7 @@ export class CotizacionnewComponent implements OnInit {
   }
 
   NuevoServicio(cliente_id:number, personal_id:number, fecha:Date){
-    
+    alert(cliente_id);
     localStorage.setItem("cliente_id",cliente_id.toString());
     let cliente_idd=localStorage.getItem("cliente_id");
     localStorage.setItem("personal_id",personal_id.toString());

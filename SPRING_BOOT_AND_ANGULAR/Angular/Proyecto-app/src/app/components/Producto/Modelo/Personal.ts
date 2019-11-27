@@ -1,5 +1,5 @@
 export class Personal{
-    personal_id:number;
-    nombre:string;
-    apellidos:string;
+    public personal_id:number;
+    public nombre:string;
+    public apellidos:string;
 }

@@ -1,5 +1,5 @@
 export class Cliente{
-    cliente_id:number;
-	apellidos:String;
-	nombre:String;
+    public cliente_id:number;
+	public apellidos:String;
+	public nombre:String;
 }

@@ -17,6 +17,7 @@ export class AddcotizacionComponent implements OnInit {
   servicioMecanicoDets:ServicioMecanicoDet[];
   saveCotizacion:Boolean;
   servicios:Servicio[];
+  servicio:Servicio;
   servicioMecanicoCab:ServicioMecanicoCab;
   servicioMecanicoDet:ServicioMecanicoDet = new ServicioMecanicoDet();
   constructor(private router:Router, private service:CotizacionnewService) { }
@@ -99,7 +100,7 @@ export class AddcotizacionComponent implements OnInit {
       type: 'success',
       title: 'Cotizacion Creada con Exito!',
       showConfirmButton: false,
-      timer: 100
+      timer: 900
     });
   }
 
