@@ -1,0 +1,11 @@
+http://localhost:8080/admin/add   metodo post
+
+{
+	"user_id":100,
+	"username":"summer@gmail.com",
+	"password":"summer",
+	"nombre":"christian villena perez",
+	"roles":[{
+		"role":"ADMIN"
+	}]
+}
