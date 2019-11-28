@@ -7,6 +7,11 @@ userid	create_date		apellidos   email		enable	nombre	password							phone_number
 2	2019-11-28 00:54:05	Berru	berrucito@gmail.com	1	Rolando	$2a$10$yZK.irN1rTd0Z2cC2cxZSORul1JASQLmGty3k8jbaqBZGig0wAWM6	123456789	USER
 
 
+usuarios login 
+email				password
+summer@gmail.com 		summer
+berrucito@gmail.com		berru
+
 http://localhost:8080/registration                    post
 
 {
