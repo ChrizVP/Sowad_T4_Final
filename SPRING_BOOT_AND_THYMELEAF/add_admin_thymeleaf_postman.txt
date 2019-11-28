@@ -8,7 +8,7 @@ tabla rol:
 role_id	role
 1	ADMIN
 
-user rol:
+tabla user rol:
 user_id	role_id
 100	1
 
