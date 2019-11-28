@@ -1,3 +1,23 @@
+datos
+
+tabla user: 
+user_id	password							username
+100	$2a$10$8QCdDe2uqF1kexLpLWjCSeGaFMFt.eYISvNTSbex1cVnaE6mHrZSK	summer@gmail.com
+
+tabla rol:
+role_id	role
+1	ADMIN
+
+user rol:
+user_id	role_id
+100	1
+
+
+
+email: summer@gmail.com
+passwoord: summer
+
+
 http://localhost:8080/admin/add   metodo post
 
 {
@@ -9,3 +29,4 @@ http://localhost:8080/admin/add   metodo post
 		"role":"ADMIN"
 	}]
 }
+
