@@ -1,3 +1,12 @@
+Datos
+user:
+
+userid	create_date		apellidos   email		enable	nombre	password							phone_number	role
+
+1	2019-11-28 00:51:57	Perez	summer@gmail.com	1	Chester	$2a$10$fGTO1CCZkFaHdauIMgiPK.85DJR1OseuicJ.oNxl9QpNO16FDU0XC	123456789	ADMIN
+2	2019-11-28 00:54:05	Berru	berrucito@gmail.com	1	Rolando	$2a$10$yZK.irN1rTd0Z2cC2cxZSORul1JASQLmGty3k8jbaqBZGig0wAWM6	123456789	USER
+
+
 http://localhost:8080/registration                    post
 
 {
