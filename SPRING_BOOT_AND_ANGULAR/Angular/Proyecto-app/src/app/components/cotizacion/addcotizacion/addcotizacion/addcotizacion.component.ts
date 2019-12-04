@@ -18,6 +18,7 @@ export class AddcotizacionComponent implements OnInit {
   saveCotizacion:Boolean;
   servicios:Servicio[];
   servicio:Servicio;
+  servicio_id:number;
   servicioMecanicoCab:ServicioMecanicoCab;
   servicioMecanicoDet:ServicioMecanicoDet = new ServicioMecanicoDet();
   constructor(private router:Router, private service:CotizacionnewService) { }
@@ -43,15 +44,21 @@ export class AddcotizacionComponent implements OnInit {
   }
 
   AddServicioMecanicoDet(servicio_id:number){
-    
+  
     localStorage.setItem("servicio_id",servicio_id.toString());
-    let producto_id=localStorage.getItem("servicio_id");
-    this.service.addServicioMecanicoDet(+producto_id,this.servicioMecanicoDet)
-    .subscribe(data=>{
-        this.servicioMecanicoDets=data; 
-    })
-    this.showModalAgregar();
-    this.servicioMecanicoDet = new ServicioMecanicoDet();
+    let servicio_id_save=localStorage.getItem("servicio_id");
+    if(this.servicioMecanicoDet.contenido == null || this.servicioMecanicoDet.marca == null || 
+      this.servicioMecanicoDet.modelo == null || this.servicioMecanicoDet.placa == null){
+        this.shoModalFaltaDatos();
+    }else{
+      this.service.addServicioMecanicoDet(+servicio_id_save,this.servicioMecanicoDet)
+      .subscribe(data=>{
+          this.servicioMecanicoDets=data; 
+      })
+      this.showModalAgregar();
+      this.servicioMecanicoDet = new ServicioMecanicoDet();
+    }
+
   }
 
   RemoveServicioMecanicoDet(servicioMecanicoDet:ServicioMecanicoDet){
@@ -103,6 +110,16 @@ export class AddcotizacionComponent implements OnInit {
       timer: 900
     });
   }
+
+  shoModalFaltaDatos(){
+    Swal.fire({
+    position: 'center',
+    type: 'error',
+    title: 'Faltan Datos!',
+    showConfirmButton: false,
+    timer: 1300
+  });
+}
 
   showModalNoHayDetalle(){
     Swal.fire({

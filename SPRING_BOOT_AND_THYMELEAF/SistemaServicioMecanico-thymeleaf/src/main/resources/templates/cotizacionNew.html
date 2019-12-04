@@ -51,7 +51,7 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-          <!-- Heading -->
+           <!-- Heading -->
       <div class="sidebar-heading">
         MANTENEDORES
       </div>
@@ -221,7 +221,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><div id="datosUsuario"></div></span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" ><div id="datosUsuario"></div></span>
                 <img class="img-profile rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSOHWHETrjnnu9moVrOEwSy3TNXhCL2cvptFmU0iI98_dq8yYSS">
               </a>
               <!-- Dropdown - User Information -->
@@ -253,28 +253,56 @@
         <!-- End of Topbar -->
         
 			<!-- CONTENIDO INICIO -->
-	
-	<!-- =========================================================== CONTENIDO ============================================ -->
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- 404 Error Text -->
-          <div class="text-center">
-            <div class="error mx-auto" data-text="404">404</div>
-            <p class="lead text-gray-800 mb-5">Page Not Found</p>
-            <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
-            <a th:href="@{/}">&larr; Back to Dashboard</a>
-          </div>
-
-        </div>
-        <!-- /.container-fluid -->
-
-<!-- =========================================================== CONTENIDO ============================================ -->
-
-    		</div>
+        
+			<!-- CONTENIDO INICIO -->
+			<div  class="container">
+				
+				<h1>Cotizar Servicio</h1>
+				<br>
+				<form th:action="@{/cotizacion/new/detalle}" method="post">
+				
+					<div class="form-group row">
+						<label for="" >Fecha: </label>
+						<div class="col-md-3" >
+							<input type="date" required="required" id="fecha" name="fecha" value="" min="2019-01-01" max="2020-12-31"/>
+						</div>
+					</div>
+					<div class="form-group row">
+					<label for="cliente" >Cliente: </label>
+					<div class="col-md-3" th:object="${Cliente}">
+					    <select class="form-control" id="cliente_id" name="cliente_id" required="required">
+					        <option value="">Select Cliente</option>
+					        <option th:each="Cliente : ${clientes}"
+					                th:value="${Cliente.cliente_id}"
+					                th:text="${Cliente.nombre}+' '+${Cliente.apellidos}"></option>
+					    </select>
+					</div>
+					<br>
+					</div>
+					<div class="form-group row">
+					<label for="personal">Personal: </label>
+					<div class="col-md-3" th:object="${Personal}">
+					    <select class="form-control" id="personal_id" name="personal_id" required="required">
+					        <option value="">Select Personal</option>
+					        <option th:each="Personal : ${personals}"
+					                th:value="${Personal.personal_id}"
+					                th:text="${Personal.nombre}+' '+${Personal.apellidos}"></option>
+					    </select>
+					</div>
+					</div>
+					<br>
+					<div class="col-md-3">
+						<input class="btn btn-primary" type="submit" value="Agregar Detalle"/>
+					</div>
+					
+				</form>
+			</div>
+			
+			<!-- CONTENIDO FIN -->
+ 		</div>
       <!-- End of Main Content -->
 
-       <!-- Footer -->
+      <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
@@ -343,4 +371,3 @@
 </body>
 
 </html>
-    

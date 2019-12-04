@@ -51,7 +51,7 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-          <!-- Heading -->
+           <!-- Heading -->
       <div class="sidebar-heading">
         MANTENEDORES
       </div>
@@ -102,7 +102,6 @@
           <i class="fas fa-align-justify"></i>
           <span>Reporte de Servicio</span></a>
       </li>
-
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -130,7 +129,7 @@
 
           <!-- Topbar Search -->
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-             <!--
+            <!--
             <div class="input-group">
                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"> 
               <div class="input-group-append">
@@ -221,7 +220,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><div id="datosUsuario"></div></span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" ><div id="datosUsuario"></div></span>
                 <img class="img-profile rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSOHWHETrjnnu9moVrOEwSy3TNXhCL2cvptFmU0iI98_dq8yYSS">
               </a>
               <!-- Dropdown - User Information -->
@@ -253,32 +252,93 @@
         <!-- End of Topbar -->
         
 			<!-- CONTENIDO INICIO -->
-	
-	<!-- =========================================================== CONTENIDO ============================================ -->
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- 404 Error Text -->
-          <div class="text-center">
-            <div class="error mx-auto" data-text="404">404</div>
-            <p class="lead text-gray-800 mb-5">Page Not Found</p>
-            <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
-            <a th:href="@{/}">&larr; Back to Dashboard</a>
-          </div>
-
-        </div>
-        <!-- /.container-fluid -->
-
-<!-- =========================================================== CONTENIDO ============================================ -->
-
-    		</div>
+			<!-- ========================================== CONTENIDO INICIO  ========================================== -->
+			
+			<div class="container">
+				<div>
+					<form th:action="@{/cotizacion/add/detalle}" th:object="${servicioMecanicoDet}" method="post">
+						<div class="form-group row">
+							<label for="cliente" >Servicio: </label>
+							<div class="col-lg-3" th:object="${Servicio}">
+								<select class="form-control" id="servicio_id" name="servicio_id" required="required">
+									<option value="">Select Servicios</option>
+									<option th:each="Servicio : ${servicios}"
+											th:value="${Servicio.servicio_id}"
+											th:text="${Servicio.nombre}">
+									</option>
+								</select>
+							</div>
+						</div>
+						
+						<input type="hidden" th:field="*{servicioDet_id}" name="servicioDet_id" id="servicioDet_id">
+						<br>
+						<div class="form-group row">
+							<label for="marca">Marca</label> 
+							<div class="col-md-3">
+								<input type="text" required="required" class="form-control" id="marca" th:field="*{marca}" name="marca">
+							</div>
+							
+							<label for="modelo">Modelo</label> 
+							<div class="col-md-3">
+								<input type="text" required="required" class="form-control" id="modelo" th:field="*{modelo}" name="modelo">
+							</div>
+						</div>
+						<div class="form-group row">
+							<label for="placa">Placa</label> 
+							<div class="col-md-3">
+								<input type="text" required="required" class="form-control" id="placa" th:field="*{placa}" name="placa">
+							</div>
+							
+							<label for="contenido">Contenido</label> 
+							<div class="col-md-3">
+								<input type="text" required="required" class="form-control" id="contenido" th:field="*{contenido}" name="contenido">
+							</div>
+						</div>
+						<a href="/cotizacion/save/detalle" class="btn btn-success">Grabar Detalle</a>
+						<button type="submit" class="btn btn-primary">Agregar Vehiculo</button>
+						<a class="btn btn-danger" th:href="@{/cotizacion/cancelar}">Cancelar</a>
+					</form>
+				
+				</div>
+				<br>
+				<div>
+					<table  class="table table-bordered table-hower" >
+						<thead>
+							<tr>
+								<th>Servicio</th>
+								<th>Marca</th>
+								<th>Modelo</th>
+								<th>Placa</th>
+								<th>Contenido</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>							
+							<tr th:each="servicioMecanicoDet: ${servicioMecanicoDets}">
+								<td th:text="${servicioMecanicoDet.Servicio.nombre}">
+								<td th:text="${servicioMecanicoDet.marca}">
+								<td th:text="${servicioMecanicoDet.modelo}">
+								<td th:text="${servicioMecanicoDet.placa}">	
+								<td th:text="${servicioMecanicoDet.contenido}">	
+								<td><a class="btn btn-danger" th:href="@{/cotizacion/remove/{id}(id=${servicioMecanicoDet.servicioDet_id})}">Eliminar</a> </td>
+							</tr>	
+						</tbody>
+					</table>
+					<br>
+					<h2 th:if="${lista == true}">No Servicios Para Cotizar</h2>
+				</div>
+			</div>
+			
+			
+			<!-- ========================================== CONTENIDO FIN     ==========================================-->
+ 		</div>
       <!-- End of Main Content -->
 
-       <!-- Footer -->
+      <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Servicio Mecanico 2019</span>
+           	<span>Copyright &copy; Servicio Mecanico 2019</span>
           </div>
         </div>
       </footer>
@@ -343,4 +403,3 @@
 </body>
 
 </html>
-    

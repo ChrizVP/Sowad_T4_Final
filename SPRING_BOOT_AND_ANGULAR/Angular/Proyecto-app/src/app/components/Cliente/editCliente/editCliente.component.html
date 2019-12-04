@@ -14,11 +14,11 @@
                 <form action="">
                     <div class="form-group">
                             <label for="">Apellidos</label>
-                            <input [(ngModel)]="cliente.apellidos" name="apellidos" type="text" class="form-control">
+                            <input [(ngModel)]="cliente.apellidos" required="required" name="apellidos" type="text" class="form-control">
                     </div>
                     <div class="form-group">
                             <label for="">Nombre</label>
-                            <input [(ngModel)]="cliente.nombre" name="nombre" type="text" class="form-control">
+                            <input [(ngModel)]="cliente.nombre" required="required" name="nombre" type="text" class="form-control">
                     </div>
                     <button  class="btn btn-success"  (click)="ActualizarCliente(cliente)">Actualizar</button>
                     <button (click)="CancelarEdition()" style="margin-left: 10px;" class="btn btn-danger">Cancelar</button>

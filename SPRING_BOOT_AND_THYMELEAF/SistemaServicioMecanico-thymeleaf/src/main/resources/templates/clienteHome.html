@@ -51,29 +51,29 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-      <!-- Heading -->
+           <!-- Heading -->
       <div class="sidebar-heading">
-        Interface
+        MANTENEDORES
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" th:href="@{/cliente/home}"  data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-user"></i>
           <span>Clientes</span>
         </a>
         </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" th:href="@{/producto/home}"  data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
+        <a class="nav-link collapsed" th:href="@{/personal/home}"  data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-user"></i>
           <span>Personal</span>
         </a>
         </li>
         <li class="nav-item">
-	        <a class="nav-link collapsed" th:href="@{/cotizacion}"  data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-	          <i class="fas fa-fw fa-cog"></i>
+	        <a class="nav-link collapsed" th:href="@{/servicio/home}"  data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+	          <i class="fas fa-newspaper"></i>
 	          <span>Servicio</span>
 	        </a>
 		</li>
@@ -91,15 +91,15 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/servicio}">
-          <i class="fas fa-fw fa-chart-area"></i>
+        <a class="nav-link" th:href="@{/cotizacion}">
+          <i class="fas fa-hand-holding-usd"></i>
           <span>Cotizar Servicio</span></a>
       </li>
 
       <!-- Nav Item - Tables -->
-      <li class="nav-item active">
-        <a class="nav-link" th:href="@{/servicio/home}">
-          <i class="fas fa-fw fa-table"></i>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/cotizacion/home}">
+          <i class="fas fa-align-justify"></i>
           <span>Reporte de Servicio</span></a>
       </li>
 
@@ -130,14 +130,16 @@
 
           <!-- Topbar Search -->
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <!--
             <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+               <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"> 
               <div class="input-group-append">
                 <button class="btn btn-primary" type="button">
                   <i class="fas fa-search fa-sm"></i>
                 </button>
               </div>
-            </div>
+              
+            </div> -->
           </form>
 
           <!-- Topbar Navbar -->
@@ -219,7 +221,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><div id="datosVendedor"></div></span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" ><div id="datosUsuario"></div></span>
                 <img class="img-profile rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSOHWHETrjnnu9moVrOEwSy3TNXhCL2cvptFmU0iI98_dq8yYSS">
               </a>
               <!-- Dropdown - User Information -->
@@ -250,53 +252,50 @@
         </nav>
         <!-- End of Topbar -->
         
-			<!-- ========================================== CONTENIDO INICIO  ========================================== -->
-			
-			<div class="container">
+			<!-- CONTENIDO INICIO -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+         
+         	<div class="container">
 				<br>
 				<div>
-					<a href="/servicio" class="btn btn-primary">Cotizar Servicio</a>
+					<a href="/cliente/new" class="btn btn-primary">Agregar Cliente</a>
 				</div>
-				<div th:switch="${servicioMecanicoDets}">
-					<h2 th:if="${servicioMecanicoDets.isEmpty()}">No hay Cotizacion de Servicios</h2>
-					<div th:if="${!servicioMecanicoDets.isEmpty()}">
+				<div th:switch="${List}">
+					<h2 th:if="${List.isEmpty()}">No hay Clientes</h2>
+					<div th:if="${!List.isEmpty()}">
 						<br>
-						<h2>Reporte Servicio</h2>
+						<h2>Cliente</h2>
 						<br>
 						<table class="table">
 							<thead>
 								<tr>
-									<th>Cliente</th>
-									<th>Servicio</th>
-									<th>Fecha</th>
-									<th>Marca</th>
-									<th>Modelo</th>
-									<th>Placa</th>
-									<th>Monto</th>
+									<th>ID</th>
+									<th>NOMBRE</th>
+									<th>APELLIDOS</th>
+									<th></th>
 									<th></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="servicioMecanicoDet : ${servicioMecanicoDets}">
-									<td th:text="${servicioMecanicoDet.servicioMecanicoCab.cliente.nombre}">
-									<td th:text="${servicioMecanicoDet.servicio.nombre}">
-									<td th:text="${servicioMecanicoDet.servicioMecanicoCab.fecha}">
-									<td th:text="${servicioMecanicoDet.marca}">
-									<td th:text="${servicioMecanicoDet.modelo}">
-									<td th:text="${servicioMecanicoDet.placa}">
-									<td th:text="${servicioMecanicoDet.servicio.monto}">
-									<td> 
-									<a class="btn btn-info" th:href="@{/servicio/edit/{id}(id=${servicioMecanicoDet.servicioDet_id})}">Editar</a>
-									<a class="btn btn-danger" th:href="@{/servicio/delete/{id}(id=${servicioMecanicoDet.servicioDet_id})}">Eliminar</a>
-									</td>
+								<tr th:each="cliente : ${List}">
+									<td th:text="${cliente.cliente_id}">
+									<td th:text="${cliente.nombre}">
+									<td th:text="${cliente.apellidos}">
+									<td><a class="btn btn-info" th:href="@{/cliente/edit/{id}(id=${cliente.cliente_id})}">Editar</a></td>
+								<td><a class="btn btn-danger" th:href="@{/cliente/delete/{id}(id=${cliente.cliente_id})}">Eliminar</a></td>
 								</tr>	
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
-			
-			<!-- ========================================== CONTENIDO FIN     ==========================================-->
+
+        </div>
+       <!-- CONTENIDO FIN -->
  		</div>
       <!-- End of Main Content -->
 

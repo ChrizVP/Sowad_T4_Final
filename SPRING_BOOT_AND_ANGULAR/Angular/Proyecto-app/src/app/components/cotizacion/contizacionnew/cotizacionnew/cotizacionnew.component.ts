@@ -15,7 +15,9 @@ export class CotizacionnewComponent implements OnInit {
 
   clientes:Cliente[];
   cliente:Cliente;
-  personal:Personal
+  personal:Personal;
+  cliente_id:number;
+  personal_id:number;
   personals:Personal[];
   dateDay = new Date();
   servicioMecanicoCab:ServicioMecanicoCab = new ServicioMecanicoCab();
@@ -41,16 +43,26 @@ export class CotizacionnewComponent implements OnInit {
   }
 
   NuevoServicio(cliente_id:number, personal_id:number, fecha:Date){
-    alert(cliente_id);
+
+    let date = new Date(fecha);
+    let fechaSave = new Date(date);
     localStorage.setItem("cliente_id",cliente_id.toString());
     let cliente_idd=localStorage.getItem("cliente_id");
     localStorage.setItem("personal_id",personal_id.toString());
     let personal_idd=localStorage.getItem("personal_id");
-    this.servicioMecanicoCab.fecha = fecha;
-    this.service.nuevoServicio(+cliente_idd, +personal_idd, this.servicioMecanicoCab)
-    .subscribe(data=>{
+
+    if(( date.getUTCDate() >= this.dateDay.getDate() ) && ( (date.getUTCMonth()+1) >= (this.dateDay.getUTCMonth()+1) ) ){
+      fechaSave.setDate(date.getUTCDate());
+      this.servicioMecanicoCab.fecha = fechaSave;
+      this.service.nuevoServicio(+cliente_idd, +personal_idd, this.servicioMecanicoCab)
+      .subscribe(data=>{
       this.router.navigate(["addcotizacion"]);
-    })
+      })
+
+    }else{
+      this.showModalFechaNoValida();
+    }
+    
     
   }
 
@@ -65,5 +77,14 @@ export class CotizacionnewComponent implements OnInit {
     });
   }
 
+  shoModalFaltaDatos(){
+    Swal.fire({
+    position: 'center',
+    type: 'error',
+    title: 'Faltan Datos!',
+    showConfirmButton: false,
+    timer: 1300
+  });
+}
 
 }

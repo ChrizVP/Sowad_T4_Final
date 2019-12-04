@@ -1,6 +1,13 @@
 package com.proyecto.app.controllers;
 
 
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,18 +46,36 @@ public class CotizacionController {
 	@Autowired
 	private PersonalService PersonalService;
 	
+	
 	@Autowired
 	private ServicioService ServicioService;
 	
 	private ServicioMecanicoCab servicioMecanicoCab;
+	
+	
 	
 	@RequestMapping("/")
 	public String returnHome(Model model) {
 		return "redirect:/home";
 	}
 	
+	
+	
 	@RequestMapping("/home")
 	public String inicio(Model model) {
+		
+		float montoCotizacion=0.0f;
+		List<ServicioMecanicoDet> serMecanicoDets = new ArrayList<ServicioMecanicoDet>();
+		serMecanicoDets = ServicioMecanicoDetService.getAll();
+		Iterator<ServicioMecanicoDet> it = serMecanicoDets.iterator();
+		while (it.hasNext()) {
+		    montoCotizacion += it.next().getServicio().getMonto(); 
+		}
+		model.addAttribute("clienteTotal", this.ClienteService.getAll().size());
+		model.addAttribute("nroCotizaciones", this.ServicioMecanicoCabService.getAll().size());
+		model.addAttribute("servicioTotal", this.ServicioService.getAll().size());
+		model.addAttribute("montoCotizacion", montoCotizacion);
+				
 		return "Home";
 	}
 	
@@ -59,14 +84,14 @@ public class CotizacionController {
 		return "login";
 	}
 	
-	@RequestMapping(value = "/servicio/home", method = RequestMethod.GET)
+	@RequestMapping(value = "/cotizacion/home", method = RequestMethod.GET)
 	private String servicioHome(Model model) {
 		model.addAttribute("servicioMecanicoDets", ServicioMecanicoDetService.getAll());
-		return "ServicioHome";
+		return "cotizacionHome";
 	}
 	
 	
-	@RequestMapping(value = "/servicio", method = RequestMethod.GET)
+	@RequestMapping(value = "/cotizacion", method = RequestMethod.GET)
 	private String servicio(Model model) {
 		if(this.servicioMecanicoCab == null) {
 			this.servicioMecanicoCab = new ServicioMecanicoCab();
@@ -74,22 +99,26 @@ public class CotizacionController {
 		
 		model.addAttribute("clientes", ClienteService.getAll());
 		model.addAttribute("personals", PersonalService.getAll());
-		return "ServicioNew";
+		return "cotizacionNew";
 	}
 	
-	@RequestMapping(value = "/servicio/new/detalle", method = RequestMethod.POST)
-	private String newServicioDet(Model model, SessionStatus status, RedirectAttributes f,@RequestParam("cliente_id") int cliente_id, @RequestParam("personal_id") int personal_id) {
+	@RequestMapping(value = "/cotizacion/new/detalle", method = RequestMethod.POST)
+	private String newServicioDet(Model model, SessionStatus status, RedirectAttributes f,@RequestParam("cliente_id") int cliente_id, @RequestParam("personal_id") int personal_id, 
+									@RequestParam("fecha") Date fecha)  {
+		
+		
 		Personal personal = PersonalService.get(personal_id);
 		Cliente cliente = ClienteService.get(cliente_id);
 		this.servicioMecanicoCab.setPersonal(personal);
 		this.servicioMecanicoCab.setCliente(cliente);
+		this.servicioMecanicoCab.setFecha(fecha);
 		model.addAttribute("servicios", ServicioService.getAll());
 		model.addAttribute("servicioMecanicoDet", new ServicioMecanicoDet());
 		model.addAttribute("servicioMecanicoDets", this.servicioMecanicoCab.getServicioMecanicoDets());
-		return "ServicioDet";
+		return "cotizacionDet";
 	}
 	
-	@RequestMapping(value = "/servicio/add/detalle", method = RequestMethod.POST)
+	@RequestMapping(value = "/cotizacion/add/detalle", method = RequestMethod.POST)
 	private String addServicioDet(@Valid ServicioMecanicoDet servicioMecanicoDet ,Model model, SessionStatus status, RedirectAttributes f,@RequestParam("servicio_id") int servicio_id) {
 		Servicio servicio = ServicioService.get(servicio_id);
 		servicioMecanicoDet.setServicio(servicio);
@@ -98,14 +127,25 @@ public class CotizacionController {
 		model.addAttribute("servicios", ServicioService.getAll());
 		model.addAttribute("servicioMecanicoDet", new ServicioMecanicoDet());
 		model.addAttribute("servicioMecanicoDets", this.servicioMecanicoCab.getServicioMecanicoDets());
-		return "ServicioDet";
+		return "cotizacionDet";
 	}
 	
-	@RequestMapping(value = "/servicio/save/detalle")
+	//ERROR AL GUARADAR xD
+
+	@RequestMapping(value = "/fallo/cotizacion/save/detalle")
+	private String errorGuadarServicioDet(Model model) {
+		model.addAttribute("servicios", ServicioService.getAll());
+		model.addAttribute("servicioMecanicoDet", new ServicioMecanicoDet());
+		model.addAttribute("servicioMecanicoDets", this.servicioMecanicoCab.getServicioMecanicoDets());
+		model.addAttribute("lista", true);
+		return "cotizacionDet";
+	}
+	
+	
+	@RequestMapping(value = "/cotizacion/save/detalle")
 	private String guardarServicioDet(RedirectAttributes f){
 		if(this.servicioMecanicoCab.getServicioMecanicoDets().isEmpty()) {
-			f.addFlashAttribute("error","El detalle no puede estar Vacio!");
-			return "redict:/service/add/detalle";
+			return "redirect:/fallo/cotizacion/save/detalle";
 		}
 		ServicioMecanicoCabService.save(this.servicioMecanicoCab);
 		for(ServicioMecanicoDet servicioMecanicoDet : this.servicioMecanicoCab.getServicioMecanicoDets()) {
@@ -114,22 +154,22 @@ public class CotizacionController {
 		f.addFlashAttribute("success","Grabado con exito");
 		this.servicioMecanicoCab.clearServicioDet();
 		this.servicioMecanicoCab =  new ServicioMecanicoCab();
-		return "redirect:/servicio";
+		return "redirect:/cotizacion/home";
 	}
 	
-	@RequestMapping(value="/servicio/remove/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/cotizacion/remove/{id}", method = RequestMethod.GET)
 	private String removeServicioDet(Model model, @PathVariable int id) {
 		this.servicioMecanicoCab.removeServicioDet(id);
 		model.addAttribute("servicios", ServicioService.getAll());
 		model.addAttribute("servicioMecanicoDet", new ServicioMecanicoDet());
 		model.addAttribute("servicioMecanicoDets", this.servicioMecanicoCab.getServicioMecanicoDets());
-		return "ServicioDet";
+		return "cotizacionDet";
 	}
 	
-	@RequestMapping(value = "/servicio/cancelar")
+	@RequestMapping(value = "/cotizacion/cancelar")
 	private String cancelarServicioDet(){
 		this.servicioMecanicoCab.clearServicioDet();
 		this.servicioMecanicoCab = new ServicioMecanicoCab();
-		return "redirect:/servicio"; 
+		return "redirect:/cotizacion"; 
 	}
 }

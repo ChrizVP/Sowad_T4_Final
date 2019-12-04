@@ -51,7 +51,7 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-          <!-- Heading -->
+           <!-- Heading -->
       <div class="sidebar-heading">
         MANTENEDORES
       </div>
@@ -221,7 +221,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><div id="datosUsuario"></div></span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" ><div id="datosUsuario"></div></span>
                 <img class="img-profile rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSOHWHETrjnnu9moVrOEwSy3TNXhCL2cvptFmU0iI98_dq8yYSS">
               </a>
               <!-- Dropdown - User Information -->
@@ -253,28 +253,36 @@
         <!-- End of Topbar -->
         
 			<!-- CONTENIDO INICIO -->
-	
-	<!-- =========================================================== CONTENIDO ============================================ -->
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- 404 Error Text -->
-          <div class="text-center">
-            <div class="error mx-auto" data-text="404">404</div>
-            <p class="lead text-gray-800 mb-5">Page Not Found</p>
-            <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
-            <a th:href="@{/}">&larr; Back to Dashboard</a>
-          </div>
-
-        </div>
-        <!-- /.container-fluid -->
-
-<!-- =========================================================== CONTENIDO ============================================ -->
-
-    		</div>
+         
+         	
+			<div class="container">
+				<h2>Agregar Cliente</h2>
+				<br>
+				<form action="#" th:action="@{/cliente/save/new}" th:object="${cliente}"
+					method="POST">
+					<input type="hidden" th:field="*{cliente_id}" name="cliente_id" id="cliente_id"> 		
+					<div class="form-group">
+						<label for="nombre">nombre</label> <input type="text" required="required"
+							class="form-control" id="nombre" th:field="*{nombre}" name="nombre">
+					</div>
+					<div class="form-group">
+						<label for="apellidos">apellidos</label> <input type="text" required="required" 
+							class="form-control" id="apellidos" th:field="*{apellidos}"
+							name="apellidos">
+					</div>
+					<button type="submit" class="btn btn-success">Guardar</button>
+					<a class="btn btn-danger" th:href="@{/cliente/home}">Cancelar</a>
+				</form>
+			</div>
+			
+			
+			
+			
+<!-- CONTENIDO FIN -->
+ 		</div>
       <!-- End of Main Content -->
 
-       <!-- Footer -->
+      <!-- Footer -->
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
@@ -343,4 +351,3 @@
 </body>
 
 </html>
-    

@@ -2,6 +2,8 @@ package com.proyecto.app.controllers;
 
 
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -45,7 +47,13 @@ public class AdminController {
 		return "user added successfully...";
 	}	
 	
-	
+	@RequestMapping("/buscar/usuario")
+	public User user(Principal principal) {
+		User user;
+		user = userRepository.findByUsername(principal.getName());
+		return user;
+			
+	}
 	
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")

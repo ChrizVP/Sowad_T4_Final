@@ -28,16 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 	
 		http.csrf().disable();
-		/*
-		http.authorizeRequests().antMatchers("/rest/**").authenticated().anyRequest().permitAll().and()
-		.authorizeRequests().antMatchers("/cliente/**","/xd/**").authenticated().anyRequest().permitAll();
-	*/	
+		
 
 		//hasAnyRole("ADMIN").anyRequest().authenticated()
 		http.authorizeRequests()
 		.antMatchers(resources).permitAll()
 		.antMatchers("/login","/admin/**").permitAll()
-		.antMatchers("/service/**").hasAnyRole("ADMIN").anyRequest().authenticated()
+		.antMatchers("/cotizacion/**").hasAnyRole("ADMIN").anyRequest().authenticated()
 		.and()
 		.formLogin()
 		.loginPage("/login")
@@ -52,12 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.logoutSuccessUrl("/login?logout");
 		
 	}
-	
-	/*@Override
-	public void configure(WebSecurity web) throws Exception{
-		web.ignoring().antMatchers("/resources/**","/static/**", "/css/**","/js/**","/images/**","/Bootstrap/**");
-	}
-	*/
 	
 	String[] resources = new String[]{
            "/resources/**", "/include/**","/css/**","/img/**","/js/**","/Bootstrap/**","/static/**","/Bootstrap/css/**","/Bootstrap/js/**","/Bootstrap/scss/**","/Bootstrap/vendedor/**"            

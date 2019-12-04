@@ -51,29 +51,29 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-      <!-- Heading -->
+           <!-- Heading -->
       <div class="sidebar-heading">
-        Interface
+        MANTENEDORES
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed" th:href="@{/cliente/home}"  data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-user"></i>
           <span>Clientes</span>
         </a>
         </li>
 
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" th:href="@{/producto/home}"  data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
+        <a class="nav-link collapsed" th:href="@{/personal/home}"  data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-user"></i>
           <span>Personal</span>
         </a>
         </li>
         <li class="nav-item">
-	        <a class="nav-link collapsed" th:href="@{/cotizacion}"  data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-	          <i class="fas fa-fw fa-cog"></i>
+	        <a class="nav-link collapsed" th:href="@{/servicio/home}"  data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+	          <i class="fas fa-newspaper"></i>
 	          <span>Servicio</span>
 	        </a>
 		</li>
@@ -91,15 +91,15 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" th:href="@{/servicio}">
-          <i class="fas fa-fw fa-chart-area"></i>
+        <a class="nav-link" th:href="@{/cotizacion}">
+          <i class="fas fa-hand-holding-usd"></i>
           <span>Cotizar Servicio</span></a>
       </li>
 
       <!-- Nav Item - Tables -->
-      <li class="nav-item active">
-        <a class="nav-link" th:href="@{/servicio/home}">
-          <i class="fas fa-fw fa-table"></i>
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/cotizacion/home}">
+          <i class="fas fa-align-justify"></i>
           <span>Reporte de Servicio</span></a>
       </li>
 
@@ -131,13 +131,16 @@
           <!-- Topbar Search -->
           <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+               <!--
+            <div class="input-group">
+               <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"> 
               <div class="input-group-append">
                 <button class="btn btn-primary" type="button">
                   <i class="fas fa-search fa-sm"></i>
                 </button>
               </div>
-            </div>
+              
+            </div> -->
           </form>
 
           <!-- Topbar Navbar -->
@@ -219,7 +222,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><div id="datosVendedor"></div></span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small" ><div id="datosUsuario"></div></span>
                 <img class="img-profile rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSOHWHETrjnnu9moVrOEwSy3TNXhCL2cvptFmU0iI98_dq8yYSS">
               </a>
               <!-- Dropdown - User Information -->
@@ -251,43 +254,31 @@
         <!-- End of Topbar -->
         
 			<!-- CONTENIDO INICIO -->
-			<div  class="container">
-				
-				<h1>Cotizar Servicio</h1>
+         
+         	
+			<div class="container">
+				<h2>Editar Servicio</h2>
 				<br>
-				<form th:action="@{/servicio/new/detalle}" method="post">
-					<div class="form-group row">
-					<label for="cliente" >Cliente: </label>
-					<div class="col-md-3" th:object="${Cliente}">
-					    <select class="form-control" id="cliente_id" name="cliente_id">
-					        <option value="">Select Cliente</option>
-					        <option th:each="Cliente : ${clientes}"
-					                th:value="${Cliente.cliente_id}"
-					                th:text="${Cliente.nombre}+' '+${Cliente.apellidos}"></option>
-					    </select>
+				<form action="#" th:action="@{/servicio/edit/{id}}" th:object="${servicio}"
+					method="POST">
+					<div class="form-group">
+						<label for="nombre">NOMBRE</label> <input type="text" class="form-control" required="required"
+							id="nombre" th:field="*{nombre}" name="nombre">
 					</div>
-					<br>
+					<input type="hidden" th:field="*{servicio_id}" name="servicio_id" id="servicio_id"> 
+					<div class="form-group">
+						<label for="monto">MONTO</label> <input type="number" required="required"
+							class="form-control" id="monto" th:field="*{monto}" name="monto">
 					</div>
-					<div class="form-group row">
-					<label for="personal">Personal: </label>
-					<div class="col-md-3" th:object="${Personal}">
-					    <select class="form-control" id="personal_id" name="personal_id">
-					        <option value="">Select Personal</option>
-					        <option th:each="Personal : ${personals}"
-					                th:value="${Personal.personal_id}"
-					                th:text="${Personal.nombre}+' '+${Personal.apellidos}"></option>
-					    </select>
-					</div>
-					</div>
-					<br>
-					<div class="col-md-3">
-						<input class="btn btn-primary" type="submit" value="Agregar Detalle"/>
-					</div>
-					
+					<button type="submit" class="btn btn-success">Guardar</button>
+					<a class="btn btn-danger" th:href="@{/servicio/home}">Cancelar</a>
 				</form>
 			</div>
 			
-			<!-- CONTENIDO FIN -->
+			
+			
+			
+ <!-- CONTENIDO FIN -->
  		</div>
       <!-- End of Main Content -->
 

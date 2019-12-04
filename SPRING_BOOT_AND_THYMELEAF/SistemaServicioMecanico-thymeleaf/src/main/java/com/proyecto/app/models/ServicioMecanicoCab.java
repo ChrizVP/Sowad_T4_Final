@@ -1,8 +1,7 @@
 package com.proyecto.app.models;
 
 import java.io.Serializable;
-import java.time.Month;
-import java.time.Year;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -55,10 +54,6 @@ public class ServicioMecanicoCab  implements Serializable {
 	@Column
 	private Date fecha;
 	
-	@PrePersist
-	public void prePersist() {
-		fecha = new Date();
-	}
 	
 	@Transient
 	int contador;
