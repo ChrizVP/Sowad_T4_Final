@@ -1,0 +1,70 @@
+<div id="wrapper">
+    <app-sidebar></app-sidebar>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+          <app-topbar></app-topbar>
+
+            <div class="container">
+                <h1 style="margin-left: 45px;">Crear una cuenta <i class="far fa-check-square"></i></h1>
+                <br>
+                <form #userForm="ngForm">
+
+                    <div class="form-group row">
+
+                        <div class="form-group">
+                            <label for="" style="margin-left: 60px;">Nombre</label>
+                            <input type="text" style="margin-left: 60px;" class="form-control" name="nombre" [(ngModel)]="user.nombre">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" style="margin-left: 140px;">Apellidos</label>
+                            <input type="text" style="margin-left: 140px;" class="form-control" name="apellidos" [(ngModel)]="user.apellidos">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="form-group">
+                            <label for="" style="margin-left: 60px;">Email</label>
+                            <input type="text" style="margin-left: 60px;" class="form-control" name="email" [(ngModel)]="user.email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" style="margin-left: 140px;">Password</label>
+                            <input type="password" style="margin-left: 140px;" class="form-control" name="password" [(ngModel)]="user.password">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                    
+                        <div class="form-group">
+                            <label for="" style="margin-left: 60px;">Telefono</label>
+                            <input type="text" style="margin-left: 60px;" class="form-control" name="phoneNumber" [(ngModel)]="user.phoneNumber">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="" style="margin-left: 140px;">Role</label>
+                            <select class="form-control" style="margin-left: 140px; width: 345px;" name="role" [(ngModel)]="user.role">
+                                <option value="">Select Role</option>
+                                <option value="ADMIN">ADMIN</option>
+                                <option value="USER">USER</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="button" style="margin-left: 45px;" class="btn btn-success" (click)="SaveUser(user, userForm)">Agregar</button>
+                        <button (click)="Cancelar()" style="margin-left: 15px;" class="btn btn-danger">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div> 
+<app-footer></app-footer>
+    </div>
+</div>
+<a class="scroll-to-top rounded" href="#page-top">
+<i class="fas fa-angle-up"></i>
+</a>
+<app-logout-modal></app-logout-modal>
